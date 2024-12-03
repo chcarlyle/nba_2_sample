@@ -1,7 +1,7 @@
 import unittest
 import pandas as pd
-from NBA_2_SAMPLE.data_cleaning import clean_data
-from NBA_2_SAMPLE.analysis import calculate_margin
+from nba_2_sample.data_cleaning import clean_data
+from nba_2_sample.analysis import calculate_margin
 
 class TestNBADataScraper(unittest.TestCase):
 
