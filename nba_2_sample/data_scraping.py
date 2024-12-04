@@ -26,9 +26,9 @@ def scrape_nba_ids(year: int, month: str):
         game = {
             "date_game": row.select_one("th[data-stat='date_game']").get_text(strip=True) if row.select_one("th[data-stat='date_game']") else None,
             "id": row.select_one("th[data-stat='date_game']").get("csk") if row.select_one("th[data-stat='date_game']") else None,
-            "visitor_team": row.select_one("td[data-stat='visitor_team_name']").get_text(strip=True) if row.select_one("td[data-stat='visitor_team_name']") else None,
+            "visitor_team": row.select_one("td[data-stat='visitor_team_name']").get("csk") if row.select_one("td[data-stat='visitor_team_name']") else None,
             "visitor_points": row.select_one("td[data-stat='visitor_pts']").get_text(strip=True) if row.select_one("td[data-stat='visitor_pts']") else None,
-            "home_team": row.select_one("td[data-stat='home_team_name']").get_text(strip=True) if row.select_one("td[data-stat='home_team_name']") else None,
+            "home_team": row.select_one("td[data-stat='home_team_name']").get("csk") if row.select_one("td[data-stat='home_team_name']") else None,
             "home_points": row.select_one("td[data-stat='home_pts']").get_text(strip=True) if row.select_one("td[data-stat='home_pts']") else None,
         }
         games.append(game)
