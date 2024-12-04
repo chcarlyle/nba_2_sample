@@ -48,13 +48,9 @@ def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
         return pd.DataFrame()  # Return empty DataFrame on error
 
     soup = BeautifulSoup(response.text, "html.parser")
-    
-    # Helper to clean team abbreviations
-    def get_team_abbr(team_name):
-        return team_name.lower().replace(" ", "")[:3]
 
-    home_abbr = get_team_abbr(home_team)
-    visitor_abbr = get_team_abbr(visitor_team)
+    home_abbr = home_team[:3]
+    visitor_abbr = visitor_team[:3]
 
     boxes = []
 
