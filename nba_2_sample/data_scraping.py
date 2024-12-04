@@ -32,6 +32,7 @@ def scrape_nba_ids(year: int, month: str):
             "home_points": row.select_one("td[data-stat='home_pts']").get_text(strip=True) if row.select_one("td[data-stat='home_pts']") else None,
         }
         games.append(game)
+        time.sleep(2)
 
     return pd.DataFrame(games)
 
@@ -69,6 +70,7 @@ def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
             "bpm": row.select_one("td[data-stat='bpm']").get_text(strip=True) if row.select_one("td[data-stat='bpm']") else None,
         }
         boxes.append(boxh)
+        time.sleep(2)
 
     # Scrape visitor team stats
     rowsv = soup.select(f"table#box-{visitor_abbr}-game-advanced > tbody > tr")
@@ -85,6 +87,7 @@ def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
             "bpm": row.select_one("td[data-stat='bpm']").get_text(strip=True) if row.select_one("td[data-stat='bpm']") else None,
         }
         boxes.append(boxv)
+        time.sleep(2)
 
     return pd.DataFrame(boxes)
 
