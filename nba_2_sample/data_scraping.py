@@ -24,6 +24,7 @@ def scrape_nba_ids(year: int, month: str):
             continue
         
         game = {
+            "month": month,
             "date_game": row.select_one("th[data-stat='date_game']").get_text(strip=True) if row.select_one("th[data-stat='date_game']") else None,
             "id": row.select_one("th[data-stat='date_game']").get("csk") if row.select_one("th[data-stat='date_game']") else None,
             "visitor_team": row.select_one("td[data-stat='visitor_team_name']").get("csk") if row.select_one("td[data-stat='visitor_team_name']") else None,
@@ -62,7 +63,7 @@ def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
             continue
         
         boxh = {
-            "team": home_team,
+            "team": home_abbr,
             "player": row.select_one("th[data-stat='player']").get("data-append-csv") if row.select_one("th[data-stat='player']") else None,
             "mp": row.select_one("td[data-stat='mp']").get("csk") if row.select_one("td[data-stat='mp']") else None,
             "ORtg": row.select_one("td[data-stat='off_rtg']").get_text(strip=True) if row.select_one("td[data-stat='off_rtg']") else None,
@@ -79,7 +80,7 @@ def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
             continue
         
         boxv = {
-            "team": visitor_team,
+            "team": visitor_abbr,
             "player": row.select_one("th[data-stat='player']").get("data-append-csv") if row.select_one("th[data-stat='player']") else None,
             "mp": row.select_one("td[data-stat='mp']").get("csk") if row.select_one("td[data-stat='mp']") else None,
             "ORtg": row.select_one("td[data-stat='off_rtg']").get_text(strip=True) if row.select_one("td[data-stat='off_rtg']") else None,

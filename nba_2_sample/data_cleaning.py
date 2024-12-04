@@ -3,10 +3,17 @@ import pandas as pd
 # Function to clean the scraped data
 def clean_data(df: pd.DataFrame):
     # Example of cleaning: convert columns to appropriate types
-    df['date_game'] = pd.to_datetime(df['date_game'], errors='coerce')
-    df['vpts'] = pd.to_numeric(df['vpts'], errors='coerce')
-    df['hpts'] = pd.to_numeric(df['hpts'], errors='coerce')
+    df['mp'] = pd.to_numeric(df['vpts'], errors='coerce')
+    df['ORtg'] = pd.to_numeric(df['hpts'], errors='coerce')
+    df['DRtg'] = pd.to_numeric(df['hpts'], errors='coerce')
+    df['bpm'] = pd.to_numeric(df['hpts'], errors='coerce')
 
     # Drop rows with missing or invalid data
-    df = df.dropna(subset=["date_game", "vpts", "hpts"])
+    df = df.dropna(subset=["mp", "bpm"])
+    return df
+
+def generate_vorp(df: pd.DataFrame):
+    # Calculate VORP: BPM * (Minutes Played / 48) / 8
+    # Convert seconds to minutes by dividing by 60
+    df['vorp'] = (df['bpm'] * (df['mp'] / 60) / 48) / 8
     return df
