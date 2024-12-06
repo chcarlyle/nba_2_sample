@@ -1,5 +1,5 @@
 import pandas as pd
-import data_cleaning as dc
+import nba_2_sample.data_cleaning as dc
 
 # Function to calculate the margin of victory for each game
 def calculate_margin(df: pd.DataFrame):
