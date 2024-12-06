@@ -42,7 +42,7 @@ def compile_yearly_data(year, directory="."):
 
 def subsetplayer(df: pd.DataFrame, player: str):
     # Filter the DataFrame
-    filtered_df = df[df['player_name'] == player].reset_index(drop=True)
+    filtered_df = df[df['player'] == player].reset_index(drop=True)
     
     if filtered_df.empty:
         print(f"No data found for player '{player}'.")
