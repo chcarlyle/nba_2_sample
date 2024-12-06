@@ -71,7 +71,6 @@ def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
             "bpm": row.select_one("td[data-stat='bpm']").get_text(strip=True) if row.select_one("td[data-stat='bpm']") else None,
         }
         boxes.append(boxh)
-        time.sleep(2)
 
     # Scrape visitor team stats
     rowsv = soup.select(f"table#box-{visitor_abbr}-game-advanced > tbody > tr")
@@ -88,9 +87,27 @@ def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
             "bpm": row.select_one("td[data-stat='bpm']").get_text(strip=True) if row.select_one("td[data-stat='bpm']") else None,
         }
         boxes.append(boxv)
-        time.sleep(2)
 
     return pd.DataFrame(boxes)
+
+
+def scrape_month(dat: pd.DataFrame):
+    games = []
+    for idx, row in dat.iterrows():
+        game_id = row['id']
+        home_team = row['home_team']
+        visitor_team = row['visitor_team']
+        date = pd.to_datetime(row['date_game'])
+
+        try:
+            advanced_data = scrape_advanced(game_id, home_team, visitor_team)
+            advanced_data['date'] = date
+            games.append(advanced_data)
+        except Exception as e:
+            print(f"Error scraping game {game_id}: {e}")
+        time.sleep(2)  # Avoid overwhelming the server
+
+    return pd.concat(games, ignore_index=True)
 
 
 # Main function
@@ -100,11 +117,10 @@ def main():
     game_data = scrape_nba_ids(year, month)
     print(game_data)
 
-    # Example: Scrape advanced stats for the first game
     if not game_data.empty:
-        first_game = game_data.iloc[0]
-        advanced_stats = scrape_advanced(first_game["id"], first_game["home_team"], first_game["visitor_team"])
+        advanced_stats = scrape_month(game_data)
         print(advanced_stats)
+
 
 if __name__ == "__main__":
     main()
