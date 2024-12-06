@@ -19,6 +19,10 @@ def generate_vorp(df: pd.DataFrame):
     df['vorp'] = (df['bpm'] * (df['mp'] / 60) / 48) / 8
     return df
 
+def generate_net(df: pd.DataFrame):
+    df['net'] = (df['ORtg']) - (df['DRtg'])
+    return df
+
 def compile_yearly_data(year, directory="."):
     # List all files in the specified directory
     from pathlib import Path
@@ -35,3 +39,13 @@ def compile_yearly_data(year, directory="."):
     
     compiled_df = pd.concat(data_frames, ignore_index=True)
     return compiled_df
+
+def subsetplayer(df: pd.DataFrame, player: str):
+    # Filter the DataFrame
+    filtered_df = df[df['player_name'] == player].reset_index(drop=True)
+    
+    if filtered_df.empty:
+        print(f"No data found for player '{player}'.")
+    
+    return filtered_df
+
