@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 
 # Function to clean the scraped data
 def clean_data(df: pd.DataFrame):
@@ -17,3 +18,20 @@ def generate_vorp(df: pd.DataFrame):
     # Convert seconds to minutes by dividing by 60
     df['vorp'] = (df['bpm'] * (df['mp'] / 60) / 48) / 8
     return df
+
+def compile_yearly_data(year, directory="."):
+    # List all files in the specified directory
+    from pathlib import Path
+    all_files = list(Path(directory).glob("*.csv"))
+    
+    # Use a regex pattern to match files with the format 'monthyear.csv' for the specified year
+    pattern = re.compile(r"^\d{2}" + str(year) + r"\.csv$")
+    matching_files = [file for file in all_files if pattern.match(file.name)]
+    
+    # Read and compile the data into a single DataFrame
+    data_frames = [pd.read_csv(file) for file in matching_files]
+    if not data_frames:
+        raise ValueError(f"No files found for year {year} in directory '{directory}'.")
+    
+    compiled_df = pd.concat(data_frames, ignore_index=True)
+    return compiled_df
