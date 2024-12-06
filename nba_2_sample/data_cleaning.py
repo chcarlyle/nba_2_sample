@@ -25,7 +25,7 @@ def compile_yearly_data(year, directory="."):
     all_files = list(Path(directory).glob("*.csv"))
     
     # Use a regex pattern to match files with the format 'monthyear.csv' for the specified year
-    pattern = re.compile(r"^\d{2}" + str(year) + r"\.csv$")
+    pattern = re.compile(r"^[a-zA-Z]+(" + str(year) + r")\.csv$")
     matching_files = [file for file in all_files if pattern.match(file.name)]
     
     # Read and compile the data into a single DataFrame
