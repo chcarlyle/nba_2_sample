@@ -90,24 +90,32 @@ def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
 
     return pd.DataFrame(boxes)
 
+def scrape_month(df_games):
+    all_box_scores = []
 
-def scrape_month(dat: pd.DataFrame):
-    games = []
-    for idx, row in dat.iterrows():
-        game_id = row['id']
-        home_team = row['home_team']
-        visitor_team = row['visitor_team']
-        date = pd.to_datetime(row['date_game'])
+    for _, game in df_games.iterrows():
+        game_id = game.get("id")
+        home_team = game.get("home_team")
+        visitor_team = game.get("visitor_team")
 
-        try:
-            advanced_data = scrape_advanced(game_id, home_team, visitor_team)
-            advanced_data['date'] = date
-            games.append(advanced_data)
-        except Exception as e:
-            print(f"Error scraping game {game_id}: {e}")
-        time.sleep(2)  # Avoid overwhelming the server
+        if not game_id or not home_team or not visitor_team:
+            print(f"Skipping game with missing data: {game}")
+            continue
 
-    return pd.concat(games, ignore_index=True)
+        print(f"Scraping game {game_id} ({home_team} vs {visitor_team})...")
+        box_scores = scrape_advanced(game_id, home_team, visitor_team)
+        
+        if not box_scores.empty:
+            box_scores["game_id"] = game_id  # Add game ID for tracking
+            all_box_scores.append(box_scores)
+
+        time.sleep(1)  # Respectful scraping delay
+
+    # Combine all box scores into a single DataFrame
+    if all_box_scores:
+        return pd.concat(all_box_scores, ignore_index=True)
+    else:
+        return pd.DataFrame()  # Return empty DataFrame if no data was scraped
 
 
 # Main function
