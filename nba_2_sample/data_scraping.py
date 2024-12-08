@@ -109,7 +109,7 @@ def scrape_month(df_games):
             box_scores["game_id"] = game_id  # Add game ID for tracking
             all_box_scores.append(box_scores)
 
-        time.sleep(1)  # Respectful scraping delay
+        time.sleep(2)  # Respectful scraping delay
 
     # Combine all box scores into a single DataFrame
     if all_box_scores:
