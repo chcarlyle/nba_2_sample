@@ -142,6 +142,7 @@ if __name__ == '__main__':
             game_id = game.get("id")
             home_team = game.get("home_team")
             visitor_team = game.get("visitor_team")
+            date = game.get('date_game')
 
             if not game_id or not home_team or not visitor_team:
                 print(f"Skipping game with missing data: {game}")
