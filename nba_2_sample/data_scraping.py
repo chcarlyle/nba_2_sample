@@ -6,6 +6,20 @@ import time
 
 # Function to scrape NBA game IDs and metadata
 def scrape_nba_ids(year: int, month: str):
+    """
+    Scrapes NBA game IDs and metadata (teams, scores, and dates) for a given month and year.
+
+    Args:
+        year (int): The year of the games (e.g., 2024).
+        month (str): The month of the games (e.g., 'october').
+
+    Returns:
+        pd.DataFrame: A DataFrame containing game IDs, dates, teams, and scores for the specified month and year.
+
+    Example:
+        >>> scrape_nba_ids(2024, 'october')
+        Returns a DataFrame with game metadata for October 2024.
+    """
     url = f"https://www.basketball-reference.com/leagues/NBA_{year}_games-{month}.html"
     
     try:
@@ -40,6 +54,22 @@ def scrape_nba_ids(year: int, month: str):
 
 # Function to scrape advanced box scores for a game
 def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
+    """
+    Scrapes advanced box scores for a specific NBA game, including offensive rating (ORtg), defensive rating (DRtg),
+    and box plus-minus (BPM) for each player on the home and visitor teams.
+
+    Args:
+        game_id (str): The unique game ID from the Basketball Reference boxscore.
+        home_team (str): The abbreviation of the home team (e.g., 'LAL' for Los Angeles Lakers).
+        visitor_team (str): The abbreviation of the visiting team (e.g., 'GSW' for Golden State Warriors).
+
+    Returns:
+        pd.DataFrame: A DataFrame containing advanced statistics for each player in the game.
+
+    Example:
+        >>> scrape_advanced("202410010LAL", "LAL", "GSW")
+        Returns a DataFrame with advanced box scores for the game between Lakers and Warriors.
+    """
     url = f"https://www.basketball-reference.com/boxscores/{game_id}.html"
     
     try:
@@ -90,7 +120,21 @@ def scrape_advanced(game_id: str, home_team: str, visitor_team: str):
 
     return pd.DataFrame(boxes)
 
+
 def scrape_month(df_games):
+    """
+    Scrapes advanced box scores for all games in a given DataFrame containing game metadata.
+
+    Args:
+        df_games (pd.DataFrame): A DataFrame containing metadata for NBA games, including game IDs, home and visitor teams.
+
+    Returns:
+        pd.DataFrame: A DataFrame containing advanced statistics for all players in the specified games.
+
+    Example:
+        >>> scrape_month(df)
+        Returns a DataFrame with advanced box scores for all games in the `df` DataFrame.
+    """
     all_box_scores = []
 
     for _, game in df_games.iterrows():
