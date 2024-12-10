@@ -49,3 +49,26 @@ def subsetplayer(df: pd.DataFrame, player: str):
     
     return filtered_df
 
+def subsetdates(df: pd.DataFrame, date1, date2):
+    """
+    Subset a DataFrame for rows within a specified date range.
+
+    Parameters:
+    df (pd.DataFrame): The input DataFrame with a 'date' column.
+    date1: The start date (inclusive).
+    date2: The end date (inclusive).
+
+    Returns:
+    pd.DataFrame: The filtered DataFrame.
+    """
+    # Ensure the 'date' column is in datetime format
+    df['date'] = pd.to_datetime(df['date'])
+
+    # Filter the DataFrame for the specified date range
+    filtered_df = df[(df['date'] >= pd.to_datetime(date1)) & (df['date'] <= pd.to_datetime(date2))].reset_index(drop=True)
+    
+    if filtered_df.empty:
+        print(f"No data found between {date1} and {date2}.")
+    
+    return filtered_df
+
