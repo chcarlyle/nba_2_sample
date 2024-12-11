@@ -142,17 +142,18 @@ def scrape_month(df_games):
         game_id = game.get("id")
         home_team = game.get("home_team")
         visitor_team = game.get("visitor_team")
-        date = game.get('date_game')
+        date_game = game.get("date_game")  # Include the game date
 
         if not game_id or not home_team or not visitor_team:
             print(f"Skipping game with missing data: {game}")
             continue
 
-        print(f"Scraping game {game_id} ({home_team} vs {visitor_team})...")
+        print(f"Scraping game {game_id} ({home_team} vs {visitor_team}) on {date_game}...")
         box_scores = scrape_advanced(game_id, home_team, visitor_team)
         
         if not box_scores.empty:
             box_scores["game_id"] = game_id  # Add game ID for tracking
+            box_scores["date_game"] = date_game  # Add game date to the final DataFrame
             all_box_scores.append(box_scores)
 
         time.sleep(2)  # Respectful scraping delay

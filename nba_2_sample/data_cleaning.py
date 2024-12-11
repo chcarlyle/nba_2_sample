@@ -8,6 +8,7 @@ def clean_data(df: pd.DataFrame):
     df['ORtg'] = pd.to_numeric(df['ORtg'], errors='coerce')
     df['DRtg'] = pd.to_numeric(df['DRtg'], errors='coerce')
     df['bpm'] = pd.to_numeric(df['bpm'], errors='coerce')
+    df['date'] = pd.to_datetime(df['date_game'])
 
     # Drop rows with missing or invalid data
     df = df.dropna(subset=["mp", "bpm"])
