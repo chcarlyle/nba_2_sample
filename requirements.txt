@@ -2,5 +2,6 @@ pandas
 requests
 beautifulsoup4
 matplotlib
+seaborn
 scikit-learn
 pytest

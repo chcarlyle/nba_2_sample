@@ -1,6 +1,8 @@
 import pandas as pd
 from scipy.stats import ttest_ind, ks_2samp
 import nba_2_sample.data_cleaning as dc
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Example of a function that calculates average margin for each team
 def average_vorp_by_team(df: pd.DataFrame):
@@ -44,3 +46,10 @@ def two_sample(df1: pd.DataFrame, df2: pd.DataFrame, metric: str):
     }
 
     return results
+
+def plot_density(df: pd.DataFrame, metric: str):
+    sns.kdeplot(data=df, x=metric, fill=True, alpha=0.5)
+    plt.title(f'Density Plot for {metric}')
+    plt.xlabel(metric)
+    plt.ylabel('Density')
+    plt.show()
