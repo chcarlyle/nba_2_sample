@@ -6,7 +6,7 @@ from scipy.stats import ttest_ind, ks_2samp
 
 # Import functions from the repository
 from data_scraping import scrape_nba_ids, scrape_month
-from data_cleaning import clean_data, generate_vorp, generate_net
+from data_cleaning import clean_data, generate_vorp, generate_net, subsetplayer, subsetdates
 from analysis import plot_density, two_sample
 
 # Streamlit app
@@ -85,6 +85,7 @@ elif option == "Analyze Data":
         analysis_option = st.selectbox("Select an analysis option:", [
             "Density Plot",
             "Two-Sample Test",
+            "Subset by Player and Date"
         ])
 
         if analysis_option == "Density Plot":
@@ -119,3 +120,20 @@ elif option == "Analyze Data":
                     st.json(results["ks-test"])
                 else:
                     st.error("One or both teams have no data.")
+
+        elif analysis_option == "Subset by Player and Date":
+            player_name = st.text_input("Enter the player's name:")
+            date_range = st.date_input("Select date range:", [])
+
+            if len(date_range) == 2:
+                start_date, end_date = date_range
+                filtered_data = subsetdates(data, start_date, end_date)
+
+                if player_name:
+                    filtered_data = subsetplayer(filtered_data, player_name)
+
+                if not filtered_data.empty:
+                    st.success(f"Data subset for player {player_name} from {start_date} to {end_date}")
+                    st.dataframe(filtered_data)
+                else:
+                    st.error("No data found for the specified player and date range.")
