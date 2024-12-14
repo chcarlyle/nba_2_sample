@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nba_2_sample.data_cleaning &mdash; nba_2_sample 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            nba_2_sample
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">nba_2_sample</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">nba_2_sample.data_cleaning</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for nba_2_sample.data_cleaning</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># Function to clean the scraped data</span>
+<div class="viewcode-block" id="clean_data">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.data_cleaning.clean_data">[docs]</a>
+<span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cleans and preprocesses the scraped basketball data.</span>
+
+<span class="sd">    This function converts specific columns to appropriate data types, calculates</span>
+<span class="sd">    new columns, and removes invalid or missing data.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        df (pd.DataFrame): The input DataFrame containing scraped data. </span>
+<span class="sd">                           Expected columns include &#39;mp&#39;, &#39;ORtg&#39;, &#39;DRtg&#39;, &#39;bpm&#39;, and &#39;date&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: A cleaned DataFrame with valid data.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        cleaned_df = clean_data(df)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;mp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;mp&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span>  <span class="c1"># Convert minutes played from seconds to minutes</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ORtg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ORtg&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>  <span class="c1"># Convert offensive rating to numeric</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;DRtg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;DRtg&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>  <span class="c1"># Convert defensive rating to numeric</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;bpm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;bpm&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>    <span class="c1"># Convert BPM to numeric</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date_game&#39;</span><span class="p">])</span>             <span class="c1"># Convert date_game to datetime</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;date_game&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>               <span class="c1">#Drop the old date column</span>
+
+    <span class="c1"># Drop rows with missing or invalid data for &#39;mp&#39; and &#39;bpm&#39;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mp&quot;</span><span class="p">,</span> <span class="s2">&quot;bpm&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<span class="c1"># Function to generate VORP</span>
+<div class="viewcode-block" id="generate_vorp">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.data_cleaning.generate_vorp">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_vorp</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the Value Over Replacement Player (VORP) metric.</span>
+
+<span class="sd">    VORP is calculated using the formula:</span>
+<span class="sd">    VORP = (BPM * (Minutes Played / 48)) / 8</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        df (pd.DataFrame): The input DataFrame containing a &#39;bpm&#39; column </span>
+<span class="sd">                           and &#39;mp&#39; (minutes played) column.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: The DataFrame with a new &#39;vorp&#39; column.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        df = generate_vorp(df)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vorp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;bpm&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;mp&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">48</span><span class="p">)</span> <span class="o">/</span> <span class="mi">8</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<span class="c1"># Function to calculate Net Rating</span>
+<div class="viewcode-block" id="generate_net">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.data_cleaning.generate_net">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_net</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the Net Rating for each row in the DataFrame.</span>
+
+<span class="sd">    Net Rating is defined as the difference between Offensive Rating (ORtg) </span>
+<span class="sd">    and Defensive Rating (DRtg):</span>
+<span class="sd">    Net Rating = ORtg - DRtg</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        df (pd.DataFrame): The input DataFrame containing &#39;ORtg&#39; and &#39;DRtg&#39; columns.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: The DataFrame with a new &#39;net&#39; column representing Net Rating.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        df = generate_net(df)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;net&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ORtg&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;DRtg&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<span class="c1"># Function to compile yearly data</span>
+<div class="viewcode-block" id="compile_yearly_data">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.data_cleaning.compile_yearly_data">[docs]</a>
+<span class="k">def</span> <span class="nf">compile_yearly_data</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compiles all CSV files for a specified year into a single DataFrame.</span>
+
+<span class="sd">    This function searches for CSV files in the given directory with filenames </span>
+<span class="sd">    following the format &#39;monthyear.csv&#39; (e.g., &#39;january2023.csv&#39;). The year </span>
+<span class="sd">    is extracted from the filename using a regex pattern.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        year (int): The year to match in the filenames.</span>
+<span class="sd">        directory (str): The directory to search for CSV files (default is the current directory).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: A single DataFrame containing the compiled data from all matching files.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If no files matching the specified year are found.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        df = compile_yearly_data(2023, directory=&quot;data&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+    <span class="n">all_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.csv&quot;</span><span class="p">))</span>
+
+    <span class="c1"># Match files with the format &#39;monthyear.csv&#39;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[a-zA-Z]+(&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;)\.csv$&quot;</span><span class="p">)</span>
+    <span class="n">matching_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">all_files</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span>
+
+    <span class="c1"># Compile the data into a single DataFrame</span>
+    <span class="n">data_frames</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">matching_files</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">data_frames</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No files found for year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2"> in directory &#39;</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+    
+    <span class="n">compiled_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">data_frames</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">compiled_df</span></div>
+
+
+<span class="c1"># Function to subset data for a specific player</span>
+<div class="viewcode-block" id="subsetplayer">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.data_cleaning.subsetplayer">[docs]</a>
+<span class="k">def</span> <span class="nf">subsetplayer</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">player</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filters the DataFrame to include only data for a specified player.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        df (pd.DataFrame): The input DataFrame containing player performance data.</span>
+<span class="sd">        player (str): The name or identifier of the player to filter.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: A filtered DataFrame containing data for the specified player.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        Prints a message if no data is found for the specified player.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        player_data = subsetplayer(df, player=&quot;LeBron James&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;player&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">player</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">filtered_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No data found for player &#39;</span><span class="si">{</span><span class="n">player</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">filtered_df</span></div>
+
+
+<span class="c1"># Function to subset data by date range</span>
+<div class="viewcode-block" id="subsetdates">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.data_cleaning.subsetdates">[docs]</a>
+<span class="k">def</span> <span class="nf">subsetdates</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">date1</span><span class="p">,</span> <span class="n">date2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filters the DataFrame to include rows within a specified date range.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        df (pd.DataFrame): The input DataFrame containing a &#39;date&#39; column.</span>
+<span class="sd">        date1 (str or datetime): The start date (inclusive).</span>
+<span class="sd">        date2 (str or datetime): The end date (inclusive).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: A filtered DataFrame with rows within the specified date range.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        Prints a message if no data is found within the date range.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        date_filtered_data = subsetdates(df, &quot;2023-01-01&quot;, &quot;2023-12-31&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Ensure the &#39;date&#39; column is in datetime format</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Filter the DataFrame for the specified date range</span>
+    <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">date1</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">date2</span><span class="p">))]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">filtered_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No data found between </span><span class="si">{</span><span class="n">date1</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">date2</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">filtered_df</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caleb Carlyle.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
