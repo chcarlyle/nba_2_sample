@@ -1,3 +1,22 @@
+"""
+analysis.py
+
+This module provides tools for analyzing and visualizing cleaned NBA data. 
+It includes functions for:
+- Visualizing data distributions using density plots.
+- Performing two-sample statistical tests to compare metrics between groups.
+
+Key functionalities:
+- `plot_density`: Creates a density plot for a specified metric, allowing insights into its distribution.
+- `two_sample`: Performs t-tests and Kolmogorov-Smirnov (KS) tests to compare two groups on a selected metric.
+
+Use cases:
+- Evaluate differences in player or team performance metrics.
+- Explore statistical distributions to identify trends or anomalies.
+
+Dependencies:
+- Relies on external libraries like `matplotlib`, `seaborn`, and `scipy` for visualization and statistical analysis.
+"""
 import pandas as pd
 from scipy.stats import ttest_ind, ks_2samp
 import nba_2_sample.data_cleaning as dc
