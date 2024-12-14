@@ -12,6 +12,7 @@ This repository contains Python scripts for scraping, cleaning, and analyzing NB
   - `scrape_nba_ids(year, month)`: Scrapes NBA game IDs, teams, scores, and dates for a specified year and month.
   - `scrape_advanced(game_id, home_team, visitor_team)`: Extracts advanced stats (e.g., BPM, ORtg, DRtg) for a single game.
   - `scrape_month(df_games)`: Scrapes advanced stats for all games in a DataFrame of game metadata.
+- **Source:** Data is scraped from **https://www.basketball-reference.com/**
 
 #### `data_cleaning.py`
 - **Purpose:** Clean and preprocess scraped data for analysis.
@@ -31,6 +32,11 @@ This repository contains Python scripts for scraping, cleaning, and analyzing NB
   - `two_sample(df1, df2, metric)`: Performs a t-test and Kolmogorov-Smirnov test on a given metric between two datasets.
   - `plot_density(df, metric)`: Generates a density plot for a specified metric.
 
+#### `app.py`
+- **Purpose:** Provide a user interface to use the functions included in the other modules and view data frames easily
+
+#### `Documentation`
+- Documentation is hosted on github pages **https://chcarlyle.github.io/nba_2_sample/**
 ---
 
 ### 2. Example Workflow
