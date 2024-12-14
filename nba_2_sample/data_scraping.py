@@ -165,7 +165,6 @@ def scrape_month(df_games):
         return pd.DataFrame()  # Return empty DataFrame if no data was scraped
 
 
-# Main function
 def main():
     year = 2024
     month = "october"

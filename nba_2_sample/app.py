@@ -21,18 +21,22 @@ option = st.sidebar.radio("Select an option:", [
 ])
 
 # Global variables
-game_data = None
-cleaned_data = None
+game_data = None  # Stores scraped game data
+cleaned_data = None  # Stores cleaned and processed data
 
 # Scrape Data
 if option == "Scrape Data":
+    """
+    Handles the data scraping functionality, allowing users to scrape game and advanced statistics data
+    for a specified year and month.
+    """
     st.title("Scrape NBA Game Data")
     year = st.number_input("Enter the year:", min_value=2000, max_value=2025, step=1, value=2024)
     month = st.text_input("Enter the month (e.g., 'october'):", value="october")
 
     if st.button("Scrape Data"):
         with st.spinner("Scraping game data..."):
-            game_data = scrape_nba_ids(year, month)
+            game_data = scrape_nba_ids(year, month)  # Fetch game data
         
         if not game_data.empty:
             st.success("Game data scraped successfully!")
@@ -40,7 +44,7 @@ if option == "Scrape Data":
 
             if st.button("Scrape Advanced Stats"):
                 with st.spinner("Scraping advanced stats for games..."):
-                    advanced_data = scrape_month(game_data)
+                    advanced_data = scrape_month(game_data)  # Fetch advanced stats
                 if not advanced_data.empty:
                     st.success("Advanced stats scraped successfully!")
                     st.dataframe(advanced_data)
@@ -51,6 +55,10 @@ if option == "Scrape Data":
 
 # Clean Data
 elif option == "Clean Data":
+    """
+    Handles data cleaning, allowing users to upload raw scraped data, clean it, and download the
+    cleaned version with additional metrics such as VORP and NET added.
+    """
     st.title("Clean and Process Data")
     uploaded_file = st.file_uploader("Upload a CSV file of scraped data:", type="csv")
 
@@ -60,9 +68,9 @@ elif option == "Clean Data":
         st.dataframe(raw_data)
 
         with st.spinner("Cleaning data..."):
-            cleaned_data = clean_data(raw_data)
-            cleaned_data = generate_vorp(cleaned_data)
-            cleaned_data = generate_net(cleaned_data)
+            cleaned_data = clean_data(raw_data)  # Clean raw data
+            cleaned_data = generate_vorp(cleaned_data)  # Add VORP metric
+            cleaned_data = generate_net(cleaned_data)  # Add NET metric
 
         st.success("Data cleaned successfully!")
         st.write("Cleaned Data:")
@@ -74,6 +82,10 @@ elif option == "Clean Data":
 
 # Analyze Data
 elif option == "Analyze Data":
+    """
+    Handles data analysis, including density plots, statistical tests, and subsetting data by player
+    and date range.
+    """
     st.title("Analyze and Visualize Data")
     uploaded_file = st.file_uploader("Upload a CSV file of cleaned data:", type="csv")
 
@@ -89,6 +101,9 @@ elif option == "Analyze Data":
         ])
 
         if analysis_option == "Density Plot":
+            """
+            Allows users to generate a density plot for a selected metric.
+            """
             metric = st.selectbox("Select a metric to plot:", options=["vorp", "net", "bpm", "ORtg", "DRtg"])
 
             if st.button("Plot Density"):
@@ -101,6 +116,10 @@ elif option == "Analyze Data":
                 st.pyplot(fig)
 
         elif analysis_option == "Two-Sample Test":
+            """
+            Performs two-sample t-tests and Kolmogorov-Smirnov tests for a selected metric
+            between two teams.
+            """
             metric = st.selectbox("Select a metric for testing:", options=["vorp", "net", "bpm", "ORtg", "DRtg"])
             team1 = st.text_input("Enter the name of the first team:")
             team2 = st.text_input("Enter the name of the second team:")
@@ -111,7 +130,7 @@ elif option == "Analyze Data":
 
                 if not df1.empty and not df2.empty:
                     with st.spinner("Performing statistical tests..."):
-                        results = two_sample(df1, df2, metric)
+                        results = two_sample(df1, df2, metric)  # Run tests
                     
                     st.write(f"Two-Sample T-Test Results for {metric}:")
                     st.json(results["t-test"])
@@ -122,15 +141,19 @@ elif option == "Analyze Data":
                     st.error("One or both teams have no data.")
 
         elif analysis_option == "Subset by Player and Date":
+            """
+            Subsets data for a specific player and/or date range, displaying the filtered
+            data in a table.
+            """
             player_name = st.text_input("Enter the player's name:")
             date_range = st.date_input("Select date range:", [])
 
             if len(date_range) == 2:
                 start_date, end_date = date_range
-                filtered_data = subsetdates(data, start_date, end_date)
+                filtered_data = subsetdates(data, start_date, end_date)  # Subset by date
 
                 if player_name:
-                    filtered_data = subsetplayer(filtered_data, player_name)
+                    filtered_data = subsetplayer(filtered_data, player_name)  # Subset by player
 
                 if not filtered_data.empty:
                     st.success(f"Data subset for player {player_name} from {start_date} to {end_date}")
