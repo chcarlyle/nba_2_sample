@@ -1,0 +1,263 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nba_2_sample.analysis &mdash; nba_2_sample 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            nba_2_sample
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">nba_2_sample</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">nba_2_sample.analysis</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for nba_2_sample.analysis</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ttest_ind</span><span class="p">,</span> <span class="n">ks_2samp</span>
+<span class="kn">import</span> <span class="nn">nba_2_sample.data_cleaning</span> <span class="k">as</span> <span class="nn">dc</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<div class="viewcode-block" id="average_vorp_by_team">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.analysis.average_vorp_by_team">[docs]</a>
+<span class="k">def</span> <span class="nf">average_vorp_by_team</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the average VORP (Value Over Replacement Player) for each team in the given DataFrame.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        df (pd.DataFrame): The DataFrame containing at least the columns &#39;team&#39; and &#39;vorp&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: A new DataFrame with two columns: &#39;team&#39; and the average VORP for each team.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        import pandas as pd</span>
+
+<span class="sd">        # Example data</span>
+<span class="sd">        data = {&#39;team&#39;: [&#39;A&#39;, &#39;A&#39;, &#39;B&#39;, &#39;B&#39;], &#39;vorp&#39;: [1.5, 2.5, 3.0, 4.0]}</span>
+<span class="sd">        df = pd.DataFrame(data)</span>
+
+<span class="sd">        # Call the function</span>
+<span class="sd">        team_avg = average_vorp_by_team(df)</span>
+<span class="sd">        print(team_avg)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">team_avg</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;team&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;vorp&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">team_avg</span></div>
+
+
+
+<div class="viewcode-block" id="player_average">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.analysis.player_average">[docs]</a>
+<span class="k">def</span> <span class="nf">player_average</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">player</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the average value of a specified metric for a given player.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        df (pd.DataFrame): The DataFrame containing player performance data.</span>
+<span class="sd">        player (str): The name or identifier of the player for whom the average is calculated.</span>
+<span class="sd">        metric (str): The column name representing the metric to calculate the average for.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: A DataFrame with the average value of the specified metric for the given player.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        This function assumes the presence of a helper function `dc.subsetplayer` </span>
+<span class="sd">        that filters the DataFrame for the given player.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        import pandas as pd</span>
+
+<span class="sd">        # Example data</span>
+<span class="sd">        data = {&#39;player&#39;: [&#39;John&#39;, &#39;John&#39;, &#39;Doe&#39;, &#39;Doe&#39;], &#39;points&#39;: [10, 20, 15, 25]}</span>
+<span class="sd">        df = pd.DataFrame(data)</span>
+
+<span class="sd">        # Define a dummy dc.subsetplayer function</span>
+<span class="sd">        def subsetplayer(df, player):</span>
+<span class="sd">            return df[df[&#39;player&#39;] == player]</span>
+
+<span class="sd">        # Monkey patch for demonstration</span>
+<span class="sd">        import types</span>
+<span class="sd">        dc = types.SimpleNamespace(subsetplayer=subsetplayer)</span>
+
+<span class="sd">        # Call the function</span>
+<span class="sd">        player_avg = player_average(df, player=&#39;John&#39;, metric=&#39;points&#39;)</span>
+<span class="sd">        print(player_avg)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sub</span> <span class="o">=</span> <span class="n">dc</span><span class="o">.</span><span class="n">subsetplayer</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">player</span><span class="p">)</span>
+    <span class="n">player_avg</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="n">metric</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">player_avg</span></div>
+
+
+
+<div class="viewcode-block" id="two_sample">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.analysis.two_sample">[docs]</a>
+<span class="k">def</span> <span class="nf">two_sample</span><span class="p">(</span><span class="n">df1</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">df2</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform a two-sample t-test and a Kolmogorov-Smirnov test on a specified metric.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    df1 (pd.DataFrame): The first DataFrame.</span>
+<span class="sd">    df2 (pd.DataFrame): The second DataFrame.</span>
+<span class="sd">    metric (str): The name of the metric/column to test.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    dict: A dictionary with the results of the t-test and KS-test.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">metric</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df1</span><span class="o">.</span><span class="n">columns</span> <span class="ow">or</span> <span class="n">metric</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df2</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The metric &#39;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">&#39; must exist in both DataFrames.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Extract the data for the metric</span>
+    <span class="n">data1</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">data2</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+    <span class="c1"># Perform the two-sample t-test</span>
+    <span class="n">t_stat</span><span class="p">,</span> <span class="n">t_p_value</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># Welch&#39;s t-test</span>
+
+    <span class="c1"># Perform the Kolmogorov-Smirnov test</span>
+    <span class="n">ks_stat</span><span class="p">,</span> <span class="n">ks_p_value</span> <span class="o">=</span> <span class="n">ks_2samp</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">)</span>
+
+    <span class="c1"># Return results as a dictionary</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;t-test&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;t-statistic&#39;</span><span class="p">:</span> <span class="n">t_stat</span><span class="p">,</span> <span class="s1">&#39;p-value&#39;</span><span class="p">:</span> <span class="n">t_p_value</span><span class="p">},</span>
+        <span class="s1">&#39;ks-test&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;ks-statistic&#39;</span><span class="p">:</span> <span class="n">ks_stat</span><span class="p">,</span> <span class="s1">&#39;p-value&#39;</span><span class="p">:</span> <span class="n">ks_p_value</span><span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="plot_density">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.analysis.plot_density">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_density</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots a density curve for a specified metric from a given DataFrame.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        df (pd.DataFrame): The DataFrame containing the data to plot.</span>
+<span class="sd">        metric (str): The column name in the DataFrame for which the density plot will be generated.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None: Displays the density plot.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        import pandas as pd</span>
+<span class="sd">        import seaborn as sns</span>
+<span class="sd">        import matplotlib.pyplot as plt</span>
+
+<span class="sd">        # Example data</span>
+<span class="sd">        df = pd.DataFrame({&#39;metric&#39;: [1, 2, 3, 4, 5]})</span>
+
+<span class="sd">        # Call the function</span>
+<span class="sd">        plot_density(df, metric=&#39;metric&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Density Plot for </span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="plot_double_density">
+<a class="viewcode-back" href="../../nba_2_sample.html#nba_2_sample.analysis.plot_double_density">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_double_density</span><span class="p">(</span><span class="n">df1</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">df2</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label1</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;DataFrame 1&#39;</span><span class="p">,</span> <span class="n">label2</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;DataFrame 2&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots density curves for the specified metric from two dataframes on the same plot.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        df1 (pd.DataFrame): The first dataframe.</span>
+<span class="sd">        df2 (pd.DataFrame): The second dataframe.</span>
+<span class="sd">        metric (str): The column name to plot the density for.</span>
+<span class="sd">        label1 (str): Label for the first dataframe&#39;s density curve.</span>
+<span class="sd">        label2 (str): Label for the second dataframe&#39;s density curve.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label1</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df2</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Density Plot for </span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caleb Carlyle.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
