@@ -1,3 +1,18 @@
+"""
+data_scraping.py
+
+This module handles web scraping for NBA player and game data. It includes functions to:
+- Scrape NBA game IDs for a given year and month.
+- Scrape advanced stats for games within a specified dataset.
+
+Key functionalities:
+- `scrape_nba_ids`: Retrieves game identifiers based on the year and month.
+- `scrape_month`: Collects advanced statistics for the scraped games.
+
+Dependencies:
+- Requires internet access to scrape data from the web.
+- Outputs data in a format suitable for further cleaning and analysis.
+"""
 
 import requests
 from bs4 import BeautifulSoup
