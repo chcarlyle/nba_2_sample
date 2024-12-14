@@ -1,3 +1,22 @@
+"""
+data_cleaning.py
+
+This module focuses on cleaning and processing NBA game data to prepare it for analysis.
+It includes functions to:
+- Clean raw scraped data.
+- Generate advanced metrics like VORP (Value Over Replacement Player) and NET rating.
+- Subset data based on player names and date ranges.
+
+Key functionalities:
+- `clean_data`: Standardizes and formats the raw dataset.
+- `generate_vorp`: Calculates Value Over Replacement Player (VORP) for players.
+- `generate_net`: Computes the NET rating for teams or players.
+- `subsetplayer`: Filters data to include only a specific player's records.
+- `subsetdates`: Filters data based on a specified date range.
+
+This module ensures data integrity and consistency, preparing datasets for visualization and statistical analysis.
+"""
+
 import pandas as pd
 import re
 
