@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nba_2_sample package &mdash; nba_2_sample 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            nba_2_sample
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">nba_2_sample package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-nba_2_sample.analysis">nba_2_sample.analysis module</a><ul>
+<li><a class="reference internal" href="#nba_2_sample.analysis.average_vorp_by_team"><code class="docutils literal notranslate"><span class="pre">average_vorp_by_team()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.analysis.player_average"><code class="docutils literal notranslate"><span class="pre">player_average()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.analysis.plot_density"><code class="docutils literal notranslate"><span class="pre">plot_density()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.analysis.plot_double_density"><code class="docutils literal notranslate"><span class="pre">plot_double_density()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.analysis.two_sample"><code class="docutils literal notranslate"><span class="pre">two_sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-nba_2_sample.data_cleaning">nba_2_sample.data_cleaning module</a><ul>
+<li><a class="reference internal" href="#nba_2_sample.data_cleaning.clean_data"><code class="docutils literal notranslate"><span class="pre">clean_data()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.data_cleaning.compile_yearly_data"><code class="docutils literal notranslate"><span class="pre">compile_yearly_data()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.data_cleaning.generate_net"><code class="docutils literal notranslate"><span class="pre">generate_net()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.data_cleaning.generate_vorp"><code class="docutils literal notranslate"><span class="pre">generate_vorp()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.data_cleaning.subsetdates"><code class="docutils literal notranslate"><span class="pre">subsetdates()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.data_cleaning.subsetplayer"><code class="docutils literal notranslate"><span class="pre">subsetplayer()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-nba_2_sample.data_scraping">nba_2_sample.data_scraping module</a><ul>
+<li><a class="reference internal" href="#nba_2_sample.data_scraping.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.data_scraping.scrape_advanced"><code class="docutils literal notranslate"><span class="pre">scrape_advanced()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.data_scraping.scrape_month"><code class="docutils literal notranslate"><span class="pre">scrape_month()</span></code></a></li>
+<li><a class="reference internal" href="#nba_2_sample.data_scraping.scrape_nba_ids"><code class="docutils literal notranslate"><span class="pre">scrape_nba_ids()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-nba_2_sample.utils">nba_2_sample.utils module</a></li>
+<li><a class="reference internal" href="#module-nba_2_sample">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nba_2_sample</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">nba_2_sample package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/nba_2_sample.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nba-2-sample-package">
+<h1>nba_2_sample package<a class="headerlink" href="#nba-2-sample-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-nba_2_sample.analysis">
+<span id="nba-2-sample-analysis-module"></span><h2>nba_2_sample.analysis module<a class="headerlink" href="#module-nba_2_sample.analysis" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.analysis.average_vorp_by_team">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.analysis.</span></span><span class="sig-name descname"><span class="pre">average_vorp_by_team</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/analysis.html#average_vorp_by_team"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.analysis.average_vorp_by_team" title="Link to this definition"></a></dt>
+<dd><p>Calculates the average VORP (Value Over Replacement Player) for each team in the given DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – The DataFrame containing at least the columns ‘team’ and ‘vorp’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new DataFrame with two columns: ‘team’ and the average VORP for each team.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>import pandas as pd</p>
+<p># Example data
+data = {‘team’: [‘A’, ‘A’, ‘B’, ‘B’], ‘vorp’: [1.5, 2.5, 3.0, 4.0]}
+df = pd.DataFrame(data)</p>
+<p># Call the function
+team_avg = average_vorp_by_team(df)
+print(team_avg)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.analysis.player_average">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.analysis.</span></span><span class="sig-name descname"><span class="pre">player_average</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/analysis.html#player_average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.analysis.player_average" title="Link to this definition"></a></dt>
+<dd><p>Calculates the average value of a specified metric for a given player.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The DataFrame containing player performance data.</p></li>
+<li><p><strong>player</strong> (<em>str</em>) – The name or identifier of the player for whom the average is calculated.</p></li>
+<li><p><strong>metric</strong> (<em>str</em>) – The column name representing the metric to calculate the average for.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the average value of the specified metric for the given player.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function assumes the presence of a helper function <cite>dc.subsetplayer</cite>
+that filters the DataFrame for the given player.</p>
+<p class="rubric">Example</p>
+<p>import pandas as pd</p>
+<p># Example data
+data = {‘player’: [‘John’, ‘John’, ‘Doe’, ‘Doe’], ‘points’: [10, 20, 15, 25]}
+df = pd.DataFrame(data)</p>
+<p># Define a dummy dc.subsetplayer function
+def subsetplayer(df, player):</p>
+<blockquote>
+<div><p>return df[df[‘player’] == player]</p>
+</div></blockquote>
+<p># Monkey patch for demonstration
+import types
+dc = types.SimpleNamespace(subsetplayer=subsetplayer)</p>
+<p># Call the function
+player_avg = player_average(df, player=’John’, metric=’points’)
+print(player_avg)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.analysis.plot_density">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.analysis.</span></span><span class="sig-name descname"><span class="pre">plot_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/analysis.html#plot_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.analysis.plot_density" title="Link to this definition"></a></dt>
+<dd><p>Plots a density curve for a specified metric from a given DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The DataFrame containing the data to plot.</p></li>
+<li><p><strong>metric</strong> (<em>str</em>) – The column name in the DataFrame for which the density plot will be generated.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Displays the density plot.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt</p>
+<p># Example data
+df = pd.DataFrame({‘metric’: [1, 2, 3, 4, 5]})</p>
+<p># Call the function
+plot_density(df, metric=’metric’)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.analysis.plot_double_density">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.analysis.</span></span><span class="sig-name descname"><span class="pre">plot_double_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'DataFrame</span> <span class="pre">1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'DataFrame</span> <span class="pre">2'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/analysis.html#plot_double_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.analysis.plot_double_density" title="Link to this definition"></a></dt>
+<dd><p>Plots density curves for the specified metric from two dataframes on the same plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df1</strong> (<em>pd.DataFrame</em>) – The first dataframe.</p></li>
+<li><p><strong>df2</strong> (<em>pd.DataFrame</em>) – The second dataframe.</p></li>
+<li><p><strong>metric</strong> (<em>str</em>) – The column name to plot the density for.</p></li>
+<li><p><strong>label1</strong> (<em>str</em>) – Label for the first dataframe’s density curve.</p></li>
+<li><p><strong>label2</strong> (<em>str</em>) – Label for the second dataframe’s density curve.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.analysis.two_sample">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.analysis.</span></span><span class="sig-name descname"><span class="pre">two_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/analysis.html#two_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.analysis.two_sample" title="Link to this definition"></a></dt>
+<dd><p>Perform a two-sample t-test and a Kolmogorov-Smirnov test on a specified metric.</p>
+<p>Parameters:
+df1 (pd.DataFrame): The first DataFrame.
+df2 (pd.DataFrame): The second DataFrame.
+metric (str): The name of the metric/column to test.</p>
+<p>Returns:
+dict: A dictionary with the results of the t-test and KS-test.</p>
+</dd></dl>
+
+</section>
+<section id="module-nba_2_sample.data_cleaning">
+<span id="nba-2-sample-data-cleaning-module"></span><h2>nba_2_sample.data_cleaning module<a class="headerlink" href="#module-nba_2_sample.data_cleaning" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_cleaning.clean_data">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_cleaning.</span></span><span class="sig-name descname"><span class="pre">clean_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_cleaning.html#clean_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_cleaning.clean_data" title="Link to this definition"></a></dt>
+<dd><p>Cleans and preprocesses the scraped basketball data.</p>
+<p>This function converts specific columns to appropriate data types, calculates
+new columns, and removes invalid or missing data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input DataFrame containing scraped data.
+Expected columns include ‘mp’, ‘ORtg’, ‘DRtg’, ‘bpm’, and ‘date’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A cleaned DataFrame with valid data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>cleaned_df = clean_data(df)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_cleaning.compile_yearly_data">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_cleaning.</span></span><span class="sig-name descname"><span class="pre">compile_yearly_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_cleaning.html#compile_yearly_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_cleaning.compile_yearly_data" title="Link to this definition"></a></dt>
+<dd><p>Compiles all CSV files for a specified year into a single DataFrame.</p>
+<p>This function searches for CSV files in the given directory with filenames
+following the format ‘monthyear.csv’ (e.g., ‘january2023.csv’). The year
+is extracted from the filename using a regex pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>year</strong> (<em>int</em>) – The year to match in the filenames.</p></li>
+<li><p><strong>directory</strong> (<em>str</em>) – The directory to search for CSV files (default is the current directory).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single DataFrame containing the compiled data from all matching files.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If no files matching the specified year are found.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>df = compile_yearly_data(2023, directory=”data”)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_cleaning.generate_net">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_cleaning.</span></span><span class="sig-name descname"><span class="pre">generate_net</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_cleaning.html#generate_net"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_cleaning.generate_net" title="Link to this definition"></a></dt>
+<dd><p>Calculates the Net Rating for each row in the DataFrame.</p>
+<p>Net Rating is defined as the difference between Offensive Rating (ORtg)
+and Defensive Rating (DRtg):
+Net Rating = ORtg - DRtg</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input DataFrame containing ‘ORtg’ and ‘DRtg’ columns.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The DataFrame with a new ‘net’ column representing Net Rating.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>df = generate_net(df)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_cleaning.generate_vorp">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_cleaning.</span></span><span class="sig-name descname"><span class="pre">generate_vorp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_cleaning.html#generate_vorp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_cleaning.generate_vorp" title="Link to this definition"></a></dt>
+<dd><p>Calculates the Value Over Replacement Player (VORP) metric.</p>
+<p>VORP is calculated using the formula:
+VORP = (BPM * (Minutes Played / 48)) / 8</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input DataFrame containing a ‘bpm’ column
+and ‘mp’ (minutes played) column.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The DataFrame with a new ‘vorp’ column.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>df = generate_vorp(df)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_cleaning.subsetdates">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_cleaning.</span></span><span class="sig-name descname"><span class="pre">subsetdates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_cleaning.html#subsetdates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_cleaning.subsetdates" title="Link to this definition"></a></dt>
+<dd><p>Filters the DataFrame to include rows within a specified date range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input DataFrame containing a ‘date’ column.</p></li>
+<li><p><strong>date1</strong> (<em>str</em><em> or </em><em>datetime</em>) – The start date (inclusive).</p></li>
+<li><p><strong>date2</strong> (<em>str</em><em> or </em><em>datetime</em>) – The end date (inclusive).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A filtered DataFrame with rows within the specified date range.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Prints a message if no data is found within the date range.</p>
+<p class="rubric">Example</p>
+<p>date_filtered_data = subsetdates(df, “2023-01-01”, “2023-12-31”)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_cleaning.subsetplayer">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_cleaning.</span></span><span class="sig-name descname"><span class="pre">subsetplayer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_cleaning.html#subsetplayer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_cleaning.subsetplayer" title="Link to this definition"></a></dt>
+<dd><p>Filters the DataFrame to include only data for a specified player.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input DataFrame containing player performance data.</p></li>
+<li><p><strong>player</strong> (<em>str</em>) – The name or identifier of the player to filter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A filtered DataFrame containing data for the specified player.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Prints a message if no data is found for the specified player.</p>
+<p class="rubric">Example</p>
+<p>player_data = subsetplayer(df, player=”LeBron James”)</p>
+</dd></dl>
+
+</section>
+<section id="module-nba_2_sample.data_scraping">
+<span id="nba-2-sample-data-scraping-module"></span><h2>nba_2_sample.data_scraping module<a class="headerlink" href="#module-nba_2_sample.data_scraping" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_scraping.main">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_scraping.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_scraping.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_scraping.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_scraping.scrape_advanced">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_scraping.</span></span><span class="sig-name descname"><span class="pre">scrape_advanced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visitor_team</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_scraping.html#scrape_advanced"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_scraping.scrape_advanced" title="Link to this definition"></a></dt>
+<dd><p>Scrapes advanced box scores for a specific NBA game, including offensive rating (ORtg), defensive rating (DRtg),
+and box plus-minus (BPM) for each player on the home and visitor teams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>game_id</strong> (<em>str</em>) – The unique game ID from the Basketball Reference boxscore.</p></li>
+<li><p><strong>home_team</strong> (<em>str</em>) – The abbreviation of the home team (e.g., ‘LAL’ for Los Angeles Lakers).</p></li>
+<li><p><strong>visitor_team</strong> (<em>str</em>) – The abbreviation of the visiting team (e.g., ‘GSW’ for Golden State Warriors).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame containing advanced statistics for each player in the game.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scrape_advanced</span><span class="p">(</span><span class="s2">&quot;202410010LAL&quot;</span><span class="p">,</span> <span class="s2">&quot;LAL&quot;</span><span class="p">,</span> <span class="s2">&quot;GSW&quot;</span><span class="p">)</span>
+<span class="go">Returns a DataFrame with advanced box scores for the game between Lakers and Warriors.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_scraping.scrape_month">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_scraping.</span></span><span class="sig-name descname"><span class="pre">scrape_month</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_games</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_scraping.html#scrape_month"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_scraping.scrape_month" title="Link to this definition"></a></dt>
+<dd><p>Scrapes advanced box scores for all games in a given DataFrame containing game metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df_games</strong> (<em>pd.DataFrame</em>) – A DataFrame containing metadata for NBA games, including game IDs, home and visitor teams.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame containing advanced statistics for all players in the specified games.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scrape_month</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="go">Returns a DataFrame with advanced box scores for all games in the `df` DataFrame.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nba_2_sample.data_scraping.scrape_nba_ids">
+<span class="sig-prename descclassname"><span class="pre">nba_2_sample.data_scraping.</span></span><span class="sig-name descname"><span class="pre">scrape_nba_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nba_2_sample/data_scraping.html#scrape_nba_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nba_2_sample.data_scraping.scrape_nba_ids" title="Link to this definition"></a></dt>
+<dd><p>Scrapes NBA game IDs and metadata (teams, scores, and dates) for a given month and year.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>year</strong> (<em>int</em>) – The year of the games (e.g., 2024).</p></li>
+<li><p><strong>month</strong> (<em>str</em>) – The month of the games (e.g., ‘october’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame containing game IDs, dates, teams, and scores for the specified month and year.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scrape_nba_ids</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="s1">&#39;october&#39;</span><span class="p">)</span>
+<span class="go">Returns a DataFrame with game metadata for October 2024.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-nba_2_sample.utils">
+<span id="nba-2-sample-utils-module"></span><h2>nba_2_sample.utils module<a class="headerlink" href="#module-nba_2_sample.utils" title="Link to this heading"></a></h2>
+</section>
+<section id="module-nba_2_sample">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nba_2_sample" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Caleb Carlyle.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
