@@ -1,3 +1,23 @@
+"""
+app.py
+
+This module defines a Streamlit application for scraping, cleaning, and analyzing NBA game data. 
+It integrates functionalities from the `data_scraping`, `data_cleaning`, and `analysis` modules into 
+a user-friendly interface.
+
+Features:
+- **Scraping**: Allows users to scrape NBA game data for a specific year and month.
+- **Cleaning**: Upload raw data, clean it, and generate advanced metrics like VORP and NET rating.
+- **Analysis**: Visualize data with density plots and perform statistical tests (e.g., t-tests, KS tests).
+
+Key sections in the app:
+- Sidebar options for "Scrape Data," "Clean Data," and "Analyze Data."
+- Interactive widgets for user inputs like player names, date ranges, and metric selection.
+
+Dependencies:
+- Requires `Streamlit` for the user interface and other libraries (`pandas`, `seaborn`, etc.) for data handling.
+"""
+
 import streamlit as st
 import pandas as pd
 import seaborn as sns
