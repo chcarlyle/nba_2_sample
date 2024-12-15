@@ -54,6 +54,13 @@ This repository contains Python scripts for scraping, cleaning, and analyzing NB
    - Visualize data distributions using `plot_density`.
 
 ---
+### Installation
+
+To install package, run:
+
+```bash
+pip install git+https://github.com/chcarlyle/nba_2_sample
+
 
 ### Requirements
 
