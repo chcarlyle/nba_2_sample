@@ -60,7 +60,7 @@ To install package, run:
 
 ```bash
 pip install git+https://github.com/chcarlyle/nba_2_sample
-
+```
 
 ### Requirements
 
