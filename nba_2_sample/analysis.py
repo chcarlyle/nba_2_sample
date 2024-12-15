@@ -167,3 +167,39 @@ def plot_double_density(df1: pd.DataFrame, df2: pd.DataFrame, metric: str, label
     plt.ylabel('Density')
     plt.legend()
     plt.show()
+
+
+def plot_time_series(df: pd.DataFrame, metric: str, date_column: str = "date"):
+    """
+    Produces a time series plot of a given metric, averaging values if multiple entries exist for the same date.
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        The input DataFrame containing the data to be plotted.
+    metric : str
+        The column name of the metric to plot on the y-axis.
+    date_column : str, optional
+        The column name representing the dates (default is "date").
+
+    Returns:
+    --------
+    None
+        Displays the time series plot.
+    """
+    # Ensure the date column is in datetime format
+    df[date_column] = pd.to_datetime(df[date_column])
+
+    # Group by date and calculate the average of the metric
+    grouped_df = df.groupby(date_column).agg({metric: "mean"}).reset_index()
+
+    # Plot the time series
+    plt.figure(figsize=(10, 6))
+    plt.plot(grouped_df[date_column], grouped_df[metric], marker='o', linestyle='-')
+    plt.title(f"Time Series Plot of {metric}", fontsize=14)
+    plt.xlabel("Date", fontsize=12)
+    plt.ylabel(metric, fontsize=12)
+    plt.grid(True, alpha=0.5)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
