@@ -54,7 +54,7 @@ def player_average(df: pd.DataFrame, player: str, metric: str):
 
     Parameters:
         df (pd.DataFrame): The DataFrame containing player performance data.
-        player (str): The name or identifier of the player for whom the average is calculated.
+        player (str): The ID for the player of interest, typically first 5 letters of the last name, first 2 of the first name, and 01. Ex: tatumja01.
         metric (str): The column name representing the metric to calculate the average for.
 
     Returns:
