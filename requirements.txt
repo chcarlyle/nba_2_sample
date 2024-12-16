@@ -1,3 +1,4 @@
+git+https://github.com/chcarlyle/nba_2_sample.git
 pandas
 requests
 beautifulsoup4
