@@ -34,6 +34,10 @@ This repository contains Python scripts for scraping, cleaning, and analyzing NB
 
 #### `app.py`
 - **Purpose:** Provide a user interface to use the functions included in the other modules and view data frames easily
+- To run:
+  ```bash
+  streamlit run $(python -c "import nba_2_sample; print(nba_2_sample.__path__[0] + '/app.py')")
+  ```
 
 #### `Documentation`
 - Documentation is hosted on github pages **https://chcarlyle.github.io/nba_2_sample/**
