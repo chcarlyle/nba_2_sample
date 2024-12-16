@@ -19,7 +19,7 @@ Dependencies:
 """
 import pandas as pd
 from scipy.stats import ttest_ind, ks_2samp
-import nba_2_sample.data_cleaning as dc
+from nba_2_sample import data_cleaning as dc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
