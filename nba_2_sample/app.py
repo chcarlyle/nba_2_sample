@@ -23,6 +23,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats import ttest_ind, ks_2samp
+import nba_2_sample
 from nba_2_sample import data_cleaning, data_scraping, analysis
 
 # Import functions from the repository
