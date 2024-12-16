@@ -135,7 +135,7 @@ def subsetplayer(df: pd.DataFrame, player: str):
 
     Parameters:
         df (pd.DataFrame): The input DataFrame containing player performance data.
-        player (str): The name or identifier of the player to filter.
+        player (str): The ID for the player of interest, typically first 5 letters of the last name, first 2 of the first name, and 01. Ex: tatumja01.
 
     Returns:
         pd.DataFrame: A filtered DataFrame containing data for the specified player.
