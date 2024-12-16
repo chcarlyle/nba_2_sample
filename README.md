@@ -38,6 +38,7 @@ This repository contains Python scripts for scraping, cleaning, and analyzing NB
   ```bash
   streamlit run $(python -c "import nba_2_sample; print(nba_2_sample.__path__[0] + '/app.py')")
   ```
+  Or visit **https://nba2sample.streamlit.app/**
 
 #### `Documentation`
 - Documentation is hosted on github pages **https://chcarlyle.github.io/nba_2_sample/**
